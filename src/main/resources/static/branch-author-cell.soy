@@ -6,5 +6,5 @@
 {template .author}
 // metadata is referenced via complete module key. The metadata may not have been successfully retrieved
 // due to timeouts on the provider so we always need to provide a default.
-<div>{$branch.metadata['com.github.wadahiro.bitbucket.branchauthor:branchAuthor'].author or '-'}</div>
+<div>{$branch.metadata['com.github.wadahiro.bitbucket.branchauthor:branchAuthor'].author ? $branch.metadata['com.github.wadahiro.bitbucket.branchauthor:branchAuthor'].author.displayName : '-'}</div>
 {/template}

@@ -1,4 +1,4 @@
-# Bitbucket(Stash) Branch Author
+# Bitbucket(Stash) Branch Author Plugin
 
 - [About](#about)
 - [Quick Start](#quick-start)

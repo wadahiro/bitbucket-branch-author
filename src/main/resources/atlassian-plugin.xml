@@ -8,9 +8,6 @@
     <!-- add our i18n resource -->
     <resource type="i18n" name="i18n" location="com.github.wadahiro.bitbucket.branchauthor.messages"/>
     
-    <component-import key="i18nService" interface="com.atlassian.stash.i18n.I18nService"/>
-    <component-import key="soyTemplateRenderer" interface="com.atlassian.soy.renderer.SoyTemplateRenderer"/>
-
     <!-- AO resources to persist plugin data -->
     <ao key="ao-module">
         <description>The AO module for this plugin.</description>
@@ -19,7 +16,6 @@
     
     <component-import key="activeObjects" interface="com.atlassian.activeobjects.external.ActiveObjects" />
     <component-import key="userService" interface="com.atlassian.stash.user.UserService" />
-    <component-import key="dateFormatter" interface="com.atlassian.stash.util.DateFormatter" />
     
     <component key="branchauthor-branchListener" class="com.github.wadahiro.bitbucket.branchauthor.BranchListener"/>
 

@@ -13,7 +13,6 @@ import com.atlassian.stash.repository.RefMetadataContext;
 import com.atlassian.stash.repository.RefMetadataProvider;
 import com.atlassian.stash.user.StashUser;
 import com.atlassian.stash.user.UserService;
-import com.atlassian.stash.util.DateFormatter;
 
 /**
  * @author Hiroyuki Wada
@@ -24,12 +23,10 @@ public class BranchAuthorProvider implements RefMetadataProvider<Map<String, Obj
 
     private final UserService userService;
     private final ActiveObjects activeObjects;
-    private final DateFormatter dateFormatter;
 
-    public BranchAuthorProvider(UserService userService, ActiveObjects activeObjects, DateFormatter dateFormatter) {
+    public BranchAuthorProvider(UserService userService, ActiveObjects activeObjects) {
         this.userService = userService;
         this.activeObjects = activeObjects;
-        this.dateFormatter = dateFormatter;
     }
 
     @Override
@@ -46,13 +43,19 @@ public class BranchAuthorProvider implements RefMetadataProvider<Map<String, Obj
                 for (BranchAuthor branchAuthor : branchAuthors) {
                     if (branchAuthor.getBranchRef().equals(ref.getId())) {
                         StashUser user = userService.getUserById(branchAuthor.getUserId());
-                        if (user == null) {
-                            // Because the user is already deleted, we use
-                            // email-address saved in BRANCH_AUTHOR table
-                            author.put("author", branchAuthor.getUserEmail());
+                        Map<String, String> authorDetail = new HashMap<String, String>();
+                        if (user != null) {
+                            authorDetail.put("displayName", user.getDisplayName());
+                            authorDetail.put("emailAddress", user.getEmailAddress());
                         } else {
-                            author.put("author", user.getDisplayName());
+                            // Because the user is already deleted, we use
+                            // email-address saved in BRANCH_AUTHOR table as
+                            // displayName.
+                            authorDetail.put("displayName", branchAuthor.getUserEmail());
+                            authorDetail.put("emailAddress", branchAuthor.getUserEmail());
                         }
+
+                        author.put("author", authorDetail);
                         author.put("created", branchAuthor.getCreated());
                     }
                 }
