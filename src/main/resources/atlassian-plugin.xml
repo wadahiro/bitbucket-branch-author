@@ -15,7 +15,7 @@
     </ao>
     
     <component-import key="activeObjects" interface="com.atlassian.activeobjects.external.ActiveObjects" />
-    <component-import key="userService" interface="com.atlassian.stash.user.UserService" />
+    <component-import key="userService" interface="com.atlassian.bitbucket.user.UserService" />
     
     <component key="branchauthor-branchListener" class="com.github.wadahiro.bitbucket.branchauthor.BranchListener"/>
 
@@ -23,10 +23,10 @@
     <ref-metadata-provider key="branchAuthor" class="com.github.wadahiro.bitbucket.branchauthor.BranchAuthorProvider" />
     
     <!-- Table column -->
-    <client-web-section key="branch-created-column" name="Branch created column" weight="50" location="stash.branches.extras">
+    <client-web-section key="branch-created-column" name="Branch created column" weight="50" location="bitbucket.branches.extras">
         <label key="com.github.wadahiro.bitbucket.branchauthor.created" />
     </client-web-section>
-    <client-web-section key="branch-author-column" name="Branch author column" weight="60" location="stash.branches.extras">
+    <client-web-section key="branch-author-column" name="Branch author column" weight="60" location="bitbucket.branches.extras">
         <label key="com.github.wadahiro.bitbucket.branchauthor.author" />
     </client-web-section>
 
@@ -40,13 +40,13 @@
         <dependency>com.github.wadahiro.bitbucket.branchauthor:branch-author-cell-templates</dependency>
     </client-web-panel>
 
-    <stash-resource key="branch-created-cell-templates" name="Branch created cell templates">
+    <client-resource key="branch-created-cell-templates" name="Branch created cell templates">
         <resource type="download" name="branch-created-cell.soy.js" location="/static/branch-created-cell.soy" />
-        <dependency>com.atlassian.stash.stash-web-plugin:global</dependency>
-    </stash-resource>
-    <stash-resource key="branch-author-cell-templates" name="Branch author cell templates">
+        <dependency>com.atlassian.bitbucket.server.bitbucket-web:global</dependency>
+    </client-resource>
+    <client-resource key="branch-author-cell-templates" name="Branch author cell templates">
         <resource type="download" name="branch-author-cell.soy.js" location="/static/branch-author-cell.soy" />
-        <dependency>com.atlassian.stash.stash-web-plugin:global</dependency>
-    </stash-resource>
+        <dependency>com.atlassian.bitbucket.server.bitbucket-web:global</dependency>
+    </client-resource>
 
 </atlassian-plugin>

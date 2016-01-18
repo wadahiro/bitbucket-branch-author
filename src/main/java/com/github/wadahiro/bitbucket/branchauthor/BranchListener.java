@@ -7,12 +7,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.atlassian.activeobjects.external.ActiveObjects;
+import com.atlassian.bitbucket.event.branch.BranchCreatedEvent;
+import com.atlassian.bitbucket.event.branch.BranchDeletedEvent;
+import com.atlassian.bitbucket.repository.Branch;
+import com.atlassian.bitbucket.repository.Repository;
+import com.atlassian.bitbucket.user.ApplicationUser;
 import com.atlassian.event.api.EventListener;
-import com.atlassian.stash.branch.BranchCreatedEvent;
-import com.atlassian.stash.branch.BranchDeletedEvent;
-import com.atlassian.stash.repository.Branch;
-import com.atlassian.stash.repository.Repository;
-import com.atlassian.stash.user.StashUser;
 
 /**
  * @author Hiroyuki Wada
@@ -30,7 +30,7 @@ public class BranchListener {
     @EventListener
     public void onBranchCreated(BranchCreatedEvent event) {
         Repository repo = event.getRepository();
-        StashUser user = event.getUser();
+        ApplicationUser user = event.getUser();
         Branch branch = event.getBranch();
 
         Integer repoId = repo.getId();

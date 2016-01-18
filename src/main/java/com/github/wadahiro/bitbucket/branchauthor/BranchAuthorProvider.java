@@ -8,11 +8,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.atlassian.activeobjects.external.ActiveObjects;
-import com.atlassian.stash.repository.Ref;
-import com.atlassian.stash.repository.RefMetadataContext;
-import com.atlassian.stash.repository.RefMetadataProvider;
-import com.atlassian.stash.user.StashUser;
-import com.atlassian.stash.user.UserService;
+import com.atlassian.bitbucket.repository.Ref;
+import com.atlassian.bitbucket.repository.RefMetadataContext;
+import com.atlassian.bitbucket.repository.RefMetadataProvider;
+import com.atlassian.bitbucket.user.ApplicationUser;
+import com.atlassian.bitbucket.user.UserService;
 
 /**
  * @author Hiroyuki Wada
@@ -42,7 +42,7 @@ public class BranchAuthorProvider implements RefMetadataProvider<Map<String, Obj
                 Map<String, Object> author = new HashMap<String, Object>();
                 for (BranchAuthor branchAuthor : branchAuthors) {
                     if (branchAuthor.getBranchRef().equals(ref.getId())) {
-                        StashUser user = userService.getUserById(branchAuthor.getUserId());
+                        ApplicationUser user = userService.getUserById(branchAuthor.getUserId());
                         Map<String, String> authorDetail = new HashMap<String, String>();
                         if (user != null) {
                             authorDetail.put("displayName", user.getDisplayName());
