@@ -6,7 +6,7 @@
 
 ## About
 
-This is an Atlassian Bitbucket(Stash) Server plugin that display branch author information in branches table.
+This is an Atlassian Bitbucket(Stash) Server plugin that display branch author information within the branch listing table.
 
 Features:
 
