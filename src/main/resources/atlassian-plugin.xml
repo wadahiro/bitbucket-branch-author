@@ -1,0 +1,56 @@
+<atlassian-plugin key="com.github.wadahiro.bitbucket.branchauthor" name="${project.name}" plugins-version="2">
+    <plugin-info>
+        <description>${project.description}</description>
+        <version>${project.version}</version>
+        <vendor name="${project.organization.name}" url="${project.organization.url}" />
+    </plugin-info>
+
+    <!-- add our i18n resource -->
+    <resource type="i18n" name="i18n" location="com.github.wadahiro.bitbucket.branchauthor.messages"/>
+    
+    <component-import key="i18nService" interface="com.atlassian.stash.i18n.I18nService"/>
+    <component-import key="soyTemplateRenderer" interface="com.atlassian.soy.renderer.SoyTemplateRenderer"/>
+
+    <!-- AO resources to persist plugin data -->
+    <ao key="ao-module">
+        <description>The AO module for this plugin.</description>
+        <entity>com.github.wadahiro.bitbucket.branchauthor.BranchAuthor</entity>
+    </ao>
+    
+    <component-import key="activeObjects" interface="com.atlassian.activeobjects.external.ActiveObjects" />
+    <component-import key="userService" interface="com.atlassian.stash.user.UserService" />
+    <component-import key="dateFormatter" interface="com.atlassian.stash.util.DateFormatter" />
+    
+    <component key="branchauthor-branchListener" class="com.github.wadahiro.bitbucket.branchauthor.BranchListener"/>
+
+    <!-- Metadata provider. The branch listing page will invoke this as part its rendering -->
+    <ref-metadata-provider key="branchAuthor" class="com.github.wadahiro.bitbucket.branchauthor.BranchAuthorProvider" />
+    
+    <!-- Table column -->
+    <client-web-section key="branch-created-column" name="Branch created column" weight="50" location="stash.branches.extras">
+        <label key="com.github.wadahiro.bitbucket.branchauthor.created" />
+    </client-web-section>
+    <client-web-section key="branch-author-column" name="Branch author column" weight="60" location="stash.branches.extras">
+        <label key="com.github.wadahiro.bitbucket.branchauthor.author" />
+    </client-web-section>
+
+    <!-- Web panel + soy template. The location attribute must correspond to the client-web-section above -->
+    <client-web-panel key="branch-created-cell" name="Branch list created cell" location="branch-created-column" weight="10">
+        <resource name="view" type="soy" location="com.github.wadahiro.bitbucket.branchauthor:branch-created-cell-templates/com.github.wadahiro.bitbucket.branchauthor.created"/>
+        <dependency>com.github.wadahiro.bitbucket.branchauthor:branch-created-cell-templates</dependency>
+    </client-web-panel>
+    <client-web-panel key="branch-author-cell" name="Branch list author cell" location="branch-author-column" weight="20">
+        <resource name="view" type="soy" location="com.github.wadahiro.bitbucket.branchauthor:branch-author-cell-templates/com.github.wadahiro.bitbucket.branchauthor.author"/>
+        <dependency>com.github.wadahiro.bitbucket.branchauthor:branch-author-cell-templates</dependency>
+    </client-web-panel>
+
+    <stash-resource key="branch-created-cell-templates" name="Branch created cell templates">
+        <resource type="download" name="branch-created-cell.soy.js" location="/static/branch-created-cell.soy" />
+        <dependency>com.atlassian.stash.stash-web-plugin:global</dependency>
+    </stash-resource>
+    <stash-resource key="branch-author-cell-templates" name="Branch author cell templates">
+        <resource type="download" name="branch-author-cell.soy.js" location="/static/branch-author-cell.soy" />
+        <dependency>com.atlassian.stash.stash-web-plugin:global</dependency>
+    </stash-resource>
+
+</atlassian-plugin>

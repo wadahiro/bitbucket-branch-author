@@ -1,0 +1,10 @@
+{namespace com.github.wadahiro.bitbucket.branchauthor}
+
+/**
+ * @param branch
+ **/
+{template .created}
+// metadata is referenced via complete module key. The metadata may not have been successfully retrieved
+// due to timeouts on the provider so we always need to provide a default.
+<div>{format_date($branch.metadata['com.github.wadahiro.bitbucket.branchauthor:branchAuthor'].created, 'short') or '-'}</div>
+{/template}
