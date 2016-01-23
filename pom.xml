@@ -131,6 +131,21 @@
                             <dataVersion>${bitbucket.data.version}</dataVersion>
                         </product>
                     </products>
+                    <enableFastdev>false</enableFastdev>
+                    <enableDevToolbox>false</enableDevToolbox>
+                    <enablePde>false</enablePde>
+                    <skipRestDocGeneration>true</skipRestDocGeneration>
+                    <allowGoogleTracking>false</allowGoogleTracking>
+                    <skipManifestValidation>true</skipManifestValidation>
+                    <extractDependencies>false</extractDependencies>
+                    <skipManifestValidation>true</skipManifestValidation>
+                    <pluginArtifact>
+                        <groupId>com.atlassian.labs.plugins</groupId>
+                        <artifactId>quickreload</artifactId>
+                        <version>${quick.reload.version}</version>
+                    </pluginArtifact>
+                    <enableQuickReload>true</enableQuickReload>
+                    <quickReloadVersion>${quick.reload.version}</quickReloadVersion>
                 </configuration>
             </plugin>
             <plugin>
@@ -156,10 +171,11 @@
     </build>
     <properties>
         <!-- When updating this, remember to update the marketplace version too -->
-        <bitbucket.version>4.0.0</bitbucket.version>
-        <bitbucket.data.version>4.0.0</bitbucket.data.version>
-        <amps.version>6.1.0</amps.version>
-        <ao.version>0.28.1</ao.version>
-        <plugin.testrunner.version>1.1.4</plugin.testrunner.version>
+        <bitbucket.version>4.3.0</bitbucket.version>
+        <bitbucket.data.version>4.3.0</bitbucket.data.version>
+        <amps.version>6.2.1</amps.version>
+        <ao.version>1.0.1</ao.version>
+        <plugin.testrunner.version>1.2.3</plugin.testrunner.version>
+        <quick.reload.version>1.29</quick.reload.version>
     </properties>
 </project>
