@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import com.atlassian.activeobjects.external.ActiveObjects;
 import com.atlassian.event.api.EventListener;
 import com.atlassian.stash.event.AbstractRepositoryRefsChangedEvent;
+import com.atlassian.stash.event.RepositoryDeletedEvent;
 import com.atlassian.stash.repository.RefChange;
 import com.atlassian.stash.repository.RefChangeType;
 import com.atlassian.stash.repository.Repository;
@@ -29,16 +30,15 @@ public class BranchListener {
     }
 
     /**
-     * We must use AbstractRepositoryRefsChangedEvent for handling all ADD/DELETE branch events.
-     * See https://jira.atlassian.com/browse/BSERV-4269.
+     * We must use AbstractRepositoryRefsChangedEvent for handling all
+     * ADD/DELETE branch events. 
+     * See https://jira.atlassian.com/browse/BSERV-4269. 
      * Using AbstractRepositoryRefsChangedEvent, we can support following operations.
      * 
-     * Branch creation from GUI
-     * Branch deletion from GUI
-     * Branch creation from Git client (git push origin <branch_name>)
-     * Branch deletion from Git client (git push --delete origin <branch_name>)
-     * Branch deletion by merged pull request(use source branch deletion)
-     * Branch creation by fork syncing
+     * Branch creation from GUI Branch deletion from GUI Branch creation from
+     * Git client (git push origin <branch_name>) Branch deletion from Git
+     * client (git push --delete origin <branch_name>) Branch deletion by merged
+     * pull request(use source branch deletion) Branch creation by fork syncing
      * Branch deletion by fork syncing
      * 
      * @param event
@@ -79,6 +79,17 @@ public class BranchListener {
         }
     }
 
+    @EventListener
+    public void onRepositoryDeleted(RepositoryDeletedEvent event) {
+        Repository repo = event.getRepository();
+
+        Integer repoId = repo.getId();
+
+        log.info("RepositoryDeletedEvent: Delete all branch authors in a repo. repoId={}", repoId);
+
+        deleteAllBranchAuthor(repoId);
+    }
+
     private void createBranchAuthor(Integer repoId, Date created, String branchRef, Integer userId, String userEmail) {
         try {
             BranchAuthorImpl.saveBranchAuthor(activeObjects, repoId, created, branchRef, userId, userEmail);
@@ -92,6 +103,14 @@ public class BranchListener {
             BranchAuthorImpl.deleteBranchAuthor(activeObjects, repoId, branchRef);
         } catch (SQLException e) {
             log.error("Deleting branch author error. repoid={}, branchRef={}", repoId, branchRef, e);
+        }
+    }
+
+    private void deleteAllBranchAuthor(Integer repoId) {
+        try {
+            BranchAuthorImpl.deleteAllBranchAuthor(activeObjects, repoId);
+        } catch (SQLException e) {
+            log.error("Deleting branch authors error. repoid={}", repoId, e);
         }
     }
 }

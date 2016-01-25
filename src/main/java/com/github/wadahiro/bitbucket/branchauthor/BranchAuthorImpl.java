@@ -53,4 +53,12 @@ public class BranchAuthorImpl {
             ao.delete(branchAuthors[0]);
         }
     }
+
+    public static void deleteAllBranchAuthor(ActiveObjects ao, Integer repoId) throws SQLException {
+        BranchAuthor[] branchAuthors = ao.find(BranchAuthor.class, Query.select().where("REPO_ID = ?", repoId));
+
+        for (BranchAuthor branchAuthor : branchAuthors) {
+            ao.delete(branchAuthor);
+        }
+    }
 }
