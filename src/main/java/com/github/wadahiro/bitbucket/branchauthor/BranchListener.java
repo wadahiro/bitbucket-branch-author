@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import com.atlassian.activeobjects.external.ActiveObjects;
 import com.atlassian.bitbucket.event.repository.AbstractRepositoryRefsChangedEvent;
+import com.atlassian.bitbucket.event.repository.RepositoryDeletedEvent;
 import com.atlassian.bitbucket.repository.RefChange;
 import com.atlassian.bitbucket.repository.RefChangeType;
 import com.atlassian.bitbucket.repository.Repository;
@@ -79,6 +80,17 @@ public class BranchListener {
         }
     }
 
+    @EventListener
+    public void onRepositoryDeleted(RepositoryDeletedEvent event) {
+        Repository repo = event.getRepository();
+
+        Integer repoId = repo.getId();
+
+        log.info("RepositoryDeletedEvent: Delete all branch authors in a repo. repoId={}", repoId);
+
+        deleteAllBranchAuthor(repoId);
+    }
+
     private void createBranchAuthor(Integer repoId, Date created, String branchRef, Integer userId, String userEmail) {
         try {
             BranchAuthorImpl.saveBranchAuthor(activeObjects, repoId, created, branchRef, userId, userEmail);
@@ -92,6 +104,14 @@ public class BranchListener {
             BranchAuthorImpl.deleteBranchAuthor(activeObjects, repoId, branchRef);
         } catch (SQLException e) {
             log.error("Deleting branch author error. repoid={}, branchRef={}", repoId, branchRef, e);
+        }
+    }
+
+    private void deleteAllBranchAuthor(Integer repoId) {
+        try {
+            BranchAuthorImpl.deleteAllBranchAuthor(activeObjects, repoId);
+        } catch (SQLException e) {
+            log.error("Deleting branch authors error. repoid={}", repoId, e);
         }
     }
 }
