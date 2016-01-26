@@ -10,17 +10,16 @@ This is an Atlassian Bitbucket(Stash) Server plugin that display branch author i
 
 Features:
 
-* Show user name who created branch through Bitbucket(Stash) UI.
+* Show user name who created branch through Bitbucket(Stash) UI or `git push`.
 
 Limitations:
 
-* Cannot display branch author that created through `git push`
 * When forking repository, the branch authors were not taken over.
 
 
 ## Quick Start
 
-@TODO
+See [Atlassian Marketplace](https://marketplace.atlassian.com/plugins/com.github.wadahiro.bitbucket.branchauthor/server/installation).
 
 ## License
 
