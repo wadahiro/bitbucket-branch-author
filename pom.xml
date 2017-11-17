@@ -171,11 +171,13 @@
     </build>
     <properties>
         <!-- When updating this, remember to update the marketplace version too -->
-        <bitbucket.version>4.3.0</bitbucket.version>
-        <bitbucket.data.version>4.3.0</bitbucket.data.version>
-        <amps.version>6.2.1</amps.version>
+        <bitbucket.version>4.11.2</bitbucket.version>
+        <bitbucket.data.version>4.11.2</bitbucket.data.version>
+        <amps.version>6.2.11</amps.version>
         <ao.version>1.0.1</ao.version>
         <plugin.testrunner.version>1.2.3</plugin.testrunner.version>
         <quick.reload.version>1.29</quick.reload.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
 </project>
